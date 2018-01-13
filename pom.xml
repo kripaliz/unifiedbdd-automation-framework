@@ -12,9 +12,10 @@
 
 	<properties>
 		<allure.version>2.0-BETA21</allure.version>
-		<appium.version>4.1.2</appium.version>
+		<appium.version>5.0.4</appium.version>
 		<cucumber.version>1.2.5</cucumber.version>
 		<java.version>1.8</java.version>
+		<selenium.version>3.8.1</selenium.version>
 		<webdrivermanager.version>1.5.0</webdrivermanager.version>
 	</properties>
 
