@@ -2,85 +2,64 @@ package com.klk.testing.automation;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
 
 import cucumber.runtime.java.spring.GlueConfig;
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 
-/**
- * @author kkurian
- *
- */
 @SpringBootApplication
 @Import(GlueConfig.class)
 public class AutomationApplication {
 
+	@Autowired
+	private WebDriverConfig webDriverConfig;
+
 	@Bean(destroyMethod = "quit")
 	@Scope("cucumber-glue")
-	public WebDriver webDriver(@Value("${webDriver.browser}") final String webDriver) {
-
-		if ("htmlunit".equals(webDriver)) {
-			return new HtmlUnitDriver();
-		}
-
-		if ("chrome".equals(webDriver)) {
+	public WebDriver webDriver() throws MalformedURLException {
+		switch (webDriverConfig.getType().toLowerCase()) {
+		case "chrome":
 			return new ChromeDriver();
-		}
-
-		if ("firefox".equals(webDriver)) {
+		case "firefox":
 			return new FirefoxDriver();
-		}
-
-		if ("ie".equals(webDriver)) {
+		case "ie":
 			return new InternetExplorerDriver();
-		}
-
-		if ("safari".equals(webDriver)) {
+		case "safari":
 			return new SafariDriver();
-		}
-
-		if ("opera".equals(webDriver)) {
+		case "opera":
 			return new OperaDriver();
+		case "remote":
+			return new RemoteWebDriver(new URL(webDriverConfig.getUrl()), getCapabilities());
+		case "android":
+			DesiredCapabilities capabilities = getCapabilities();
+			capabilities.setCapability("unicodeKeyboard", "true");
+			capabilities.setCapability("resetKeyboard", "true");
+			return new AndroidDriver<>(new URL(webDriverConfig.getUrl()), capabilities);
+		case "ios":
+			return new IOSDriver<>(new URL(webDriverConfig.getUrl()), getCapabilities());
+		default:
+			throw new IllegalArgumentException(
+					String.format("Web driver %s not supported.", webDriverConfig.getType()));
 		}
-
-		throw new IllegalArgumentException(String.format("Web driver %s not supported.", webDriver));
 	}
 
-	@Bean
-	@ConfigurationProperties("appium.desiredCapabilities")
-	public Map<String, String> rawMap() {
-		return new HashMap<String, String>();
-	}
-
-	@Bean
-	public DesiredCapabilities desiredCapabilities() {
-		return new DesiredCapabilities(rawMap());
-	}
-
-	@Bean(destroyMethod = "quit")
-	@Scope("cucumber-glue")
-	public AppiumDriver<WebElement> appiumDriver(@Value("${appium.url}") final String url)
-			throws MalformedURLException {
-		return new AndroidDriver<>(new URL(url), desiredCapabilities());
+	protected DesiredCapabilities getCapabilities() {
+		return new DesiredCapabilities(webDriverConfig.getDesiredCapabilities());
 	}
 
 	public static void main(final String[] args) {
