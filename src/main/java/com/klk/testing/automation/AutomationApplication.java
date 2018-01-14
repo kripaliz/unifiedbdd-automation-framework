@@ -15,15 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
 
-import cucumber.runtime.java.spring.GlueConfig;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import io.github.bonigarcia.wdm.ChromeDriverManager;
+import io.github.bonigarcia.wdm.FirefoxDriverManager;
+import io.github.bonigarcia.wdm.InternetExplorerDriverManager;
+import io.github.bonigarcia.wdm.OperaDriverManager;
 
 @SpringBootApplication
-@Import(GlueConfig.class)
 public class AutomationApplication {
 
 	@Autowired
@@ -34,14 +35,18 @@ public class AutomationApplication {
 	public WebDriver webDriver() throws MalformedURLException {
 		switch (webDriverConfig.getType().toLowerCase()) {
 		case "chrome":
+			ChromeDriverManager.getInstance().setup();
 			return new ChromeDriver();
 		case "firefox":
+			FirefoxDriverManager.getInstance().setup();
 			return new FirefoxDriver();
 		case "ie":
+			InternetExplorerDriverManager.getInstance().setup();
 			return new InternetExplorerDriver();
 		case "safari":
 			return new SafariDriver();
 		case "opera":
+			OperaDriverManager.getInstance().setup();
 			return new OperaDriver();
 		case "remote":
 			return new RemoteWebDriver(new URL(webDriverConfig.getUrl()), getCapabilities());
