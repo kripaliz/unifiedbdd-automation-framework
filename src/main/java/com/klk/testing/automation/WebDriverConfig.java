@@ -7,6 +7,12 @@ import org.springframework.stereotype.Component;
 
 import lombok.Data;
 
+/**
+ * A configuration bean for webDriver related properties.
+ * 
+ * @author kkurian
+ *
+ */
 @Component
 @ConfigurationProperties("webdriver")
 @Data

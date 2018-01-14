@@ -8,6 +8,13 @@ import java.lang.annotation.Target;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+/**
+ * A marker interface for PageObjects. Annotate any PageObject classes with
+ * this.
+ * 
+ * @author kkurian
+ *
+ */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Component

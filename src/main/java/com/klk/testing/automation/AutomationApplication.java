@@ -24,6 +24,13 @@ import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import io.github.bonigarcia.wdm.InternetExplorerDriverManager;
 import io.github.bonigarcia.wdm.OperaDriverManager;
 
+/**
+ * The Spring Boot application configuration that starts wiring up the
+ * application to be executed.
+ * 
+ * @author kkurian
+ *
+ */
 @SpringBootApplication
 public class AutomationApplication {
 

@@ -12,6 +12,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.klk.testing.automation.AutomationApplication;
 
+/**
+ * A marker interface for StepDef classes. It takes care of the spring context
+ * initialisation.
+ * 
+ * @author kkurian
+ *
+ */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @RunWith(SpringRunner.class)
