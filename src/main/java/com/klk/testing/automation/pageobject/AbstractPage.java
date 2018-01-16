@@ -3,6 +3,7 @@
  */
 package com.klk.testing.automation.pageobject;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +15,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -126,5 +128,32 @@ public abstract class AbstractPage {
 			throw new IllegalStateException(
 					"webDriver is of type:" + webDriver.getClass().getName() + " expected AppiumDriver");
 		}
+	}
+
+	/**
+	 * Select a webElement based on content text from a list
+	 * 
+	 * @param webElementList
+	 * @param requiredText
+	 * @return
+	 */
+	protected WebElement selectWebElementWithTextFromList(List<WebElement> webElementList, String requiredText) {
+		for (WebElement webElement : webElementList) {
+			if (webElement.getText().contains(requiredText)) {
+				return webElement;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Select an option from a dropDown element
+	 * 
+	 * @param dropdownWebElement
+	 * @param requiredText
+	 */
+	protected void selectValueFromDropdown(WebElement dropdownWebElement, String requiredText) {
+		Select dropdown = new Select(dropdownWebElement);
+		dropdown.selectByValue(requiredText);
 	}
 }
