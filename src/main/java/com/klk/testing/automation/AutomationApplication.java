@@ -17,6 +17,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
+import com.klk.testing.automation.allure.listener.ScreenshotListener;
+
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
@@ -40,6 +42,12 @@ public class AutomationApplication {
 	@Bean(destroyMethod = "quit")
 	@Scope("cucumber-glue")
 	public WebDriver webDriver() throws MalformedURLException {
+		WebDriver webDriver = getWebDriver();
+		ScreenshotListener.WEB_DRIVER.set(webDriver);
+		return webDriver;
+	}
+
+	private WebDriver getWebDriver() throws MalformedURLException {
 		switch (webDriverConfig.getType().toLowerCase()) {
 		case "chrome":
 			ChromeDriverManager.getInstance().setup();
