@@ -1,7 +1,15 @@
 package com.klk.testing.automation;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Properties;
+
+import javax.annotation.PostConstruct;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,9 +19,12 @@ import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
@@ -25,6 +36,7 @@ import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import io.github.bonigarcia.wdm.InternetExplorerDriverManager;
 import io.github.bonigarcia.wdm.OperaDriverManager;
+import io.qameta.allure.util.PropertiesUtils;
 
 /**
  * The Spring Boot application configuration that starts wiring up the
@@ -35,6 +47,11 @@ import io.github.bonigarcia.wdm.OperaDriverManager;
  */
 @SpringBootApplication
 public class AutomationApplication {
+
+	private static final Logger LOG = LoggerFactory.getLogger(AutomationApplication.class);
+
+	@Autowired
+	private ApplicationContext applicationContext;
 
 	@Autowired
 	private WebDriverConfig webDriverConfig;
@@ -80,6 +97,30 @@ public class AutomationApplication {
 
 	protected DesiredCapabilities getCapabilities() {
 		return new DesiredCapabilities(webDriverConfig.getDesiredCapabilities());
+	}
+
+	@PostConstruct
+	public void writeAllureEnvironment() {
+		String path = getAllureResultsPath();
+		new File(path).mkdirs();
+		File environmentFile = new File(path, "environment.properties");
+		try (OutputStream outputStream = new FileOutputStream(environmentFile)) {
+			Properties properties = new Properties();
+			for (String key : Arrays.asList("spring.profiles.active")) {
+				properties.put(key, applicationContext.getEnvironment().getProperty(key));
+			}
+			System.getProperties().entrySet().parallelStream()
+					.filter(property -> Arrays.asList("threadCount", "cucumber.tags").contains(property.getKey()))
+					.forEach(property -> properties.put(property.getKey(), property.getValue()));
+			properties.store(outputStream, null);
+		} catch (IOException e) {
+			LOG.warn("error saving environment.properties", e);
+		}
+	}
+
+	private String getAllureResultsPath() {
+		final Properties properties = PropertiesUtils.loadAllureProperties();
+		return properties.getProperty("allure.results.directory", "allure-results");
 	}
 
 	public static void main(final String[] args) {
