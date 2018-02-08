@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.collections.MapUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -96,6 +97,9 @@ public class AutomationApplication {
 	}
 
 	protected DesiredCapabilities getCapabilities() {
+		if (MapUtils.isNotEmpty(webDriverConfig.getDesiredCapabilities())) {
+			webDriverConfig.getDesiredCapabilities().put("name", ScreenshotListener.TEST_NAME.get());
+		}
 		return new DesiredCapabilities(webDriverConfig.getDesiredCapabilities());
 	}
 
