@@ -173,7 +173,7 @@ public abstract class AbstractPage {
 	 * 
 	 * @param webElement
 	 */
-	protected void forceClickOnButton(WebElement webElement) {
+	protected void forceClick(WebElement webElement) {
 		JavascriptExecutor jse = (JavascriptExecutor) webDriver;
 		jse.executeScript("arguments[0].click();", webElement);
 	}
