@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -156,4 +157,25 @@ public abstract class AbstractPage {
 		Select dropdown = new Select(dropdownWebElement);
 		dropdown.selectByValue(requiredText);
 	}
+
+	/**
+	 * Scroll to an element on the page
+	 * 
+	 * @param webElement
+	 */
+	protected void scrollIntoView(WebElement webElement) {
+		JavascriptExecutor jse = (JavascriptExecutor) webDriver;
+		jse.executeScript("arguments[0].scrollIntoView();", webElement);
+	}
+
+	/**
+	 * Force click on an element on the page
+	 * 
+	 * @param webElement
+	 */
+	protected void forceClickOnButton(WebElement webElement) {
+		JavascriptExecutor jse = (JavascriptExecutor) webDriver;
+		jse.executeScript("arguments[0].click();", webElement);
+	}
+
 }
