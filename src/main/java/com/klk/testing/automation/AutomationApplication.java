@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.collections.MapUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
@@ -33,16 +34,13 @@ import com.klk.testing.automation.allure.listener.ScreenshotListener;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.FirefoxDriverManager;
-import io.github.bonigarcia.wdm.InternetExplorerDriverManager;
-import io.github.bonigarcia.wdm.OperaDriverManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.util.PropertiesUtils;
 
 /**
  * The Spring Boot application configuration that starts wiring up the
  * application to be executed.
- * 
+ *
  * @author kkurian
  *
  */
@@ -68,18 +66,21 @@ public class AutomationApplication {
 	private WebDriver getWebDriver() throws MalformedURLException {
 		switch (webDriverConfig.getType().toLowerCase()) {
 		case "chrome":
-			ChromeDriverManager.getInstance().setup();
+			WebDriverManager.chromedriver().setup();
 			return new ChromeDriver();
 		case "firefox":
-			FirefoxDriverManager.getInstance().setup();
+			WebDriverManager.firefoxdriver().setup();
 			return new FirefoxDriver();
 		case "ie":
-			InternetExplorerDriverManager.getInstance().setup();
+			WebDriverManager.iedriver().setup();
 			return new InternetExplorerDriver();
+		case "edge":
+			WebDriverManager.edgedriver().setup();
+			return new EdgeDriver();
 		case "safari":
 			return new SafariDriver();
 		case "opera":
-			OperaDriverManager.getInstance().setup();
+			WebDriverManager.operadriver().setup();
 			return new OperaDriver();
 		case "remote":
 			return new RemoteWebDriver(new URL(webDriverConfig.getUrl()), getCapabilities());
