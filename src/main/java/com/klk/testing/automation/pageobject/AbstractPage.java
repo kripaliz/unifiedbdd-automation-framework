@@ -12,8 +12,12 @@ import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -30,7 +34,7 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 /**
  * The abstraction for a PageObject that can execute for browsers on desktops
  * and mobile devices as well as mobile apps.
- * 
+ *
  * @author kkurian
  *
  */
@@ -53,22 +57,22 @@ public abstract class AbstractPage {
 
 	/**
 	 * Waits for given <code>webElement</code> upto <code>timeOut</code> seconds
-	 * 
+	 *
 	 * @param webElement
 	 * @param timeOut
 	 */
-	protected void waitForElement(WebElement webElement, long timeOut) {
-		WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
+	protected void waitForElement(final WebElement webElement, final long timeOut) {
+		final WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
 		wait.until(ExpectedConditions.elementToBeClickable(webElement));
 	}
 
 	/**
 	 * Sends the return/enter key
-	 * 
+	 *
 	 * @param webElement
 	 */
 	@SuppressWarnings("rawtypes")
-	protected void sendEnterKey(WebElement webElement) {
+	protected void sendEnterKey(final WebElement webElement) {
 		if (webDriver instanceof AndroidDriver) {
 			((AndroidDriver) webDriver).pressKeyCode(AndroidKeyCode.ENTER);
 		} else {
@@ -78,7 +82,7 @@ public abstract class AbstractPage {
 
 	/**
 	 * Check whether current execution is on a mobile device
-	 * 
+	 *
 	 * @return
 	 */
 	protected boolean isDevice() {
@@ -87,7 +91,7 @@ public abstract class AbstractPage {
 
 	/**
 	 * Check whether current execution is on a mobile app
-	 * 
+	 *
 	 * @return
 	 */
 	protected boolean isApp() {
@@ -97,11 +101,32 @@ public abstract class AbstractPage {
 	}
 
 	/**
+	 * Check whether current execution is on Firefox
+	 *
+	 * @return
+	 */
+	protected boolean isFirefox() {
+		return webDriver instanceof FirefoxDriver || MapUtils.isNotEmpty(webDriverConfig.getDesiredCapabilities())
+				&& "Firefox".equalsIgnoreCase(webDriverConfig.getDesiredCapabilities().get("browserName"));
+	}
+
+	/**
+	 * Check whether current execution is on InternetExplorer
+	 *
+	 * @return
+	 */
+	protected boolean isInternetExplorer() {
+		return webDriver instanceof InternetExplorerDriver
+				|| MapUtils.isNotEmpty(webDriverConfig.getDesiredCapabilities()) && "Internet Explorer"
+						.equalsIgnoreCase(webDriverConfig.getDesiredCapabilities().get("browserName"));
+	}
+
+	/**
 	 * Switches current webDriver context to the webView
 	 */
 	protected void switchToWebView() {
 		if (isApp()) {
-			Set<String> contextHandles = getAppiumDriver().getContextHandles();
+			final Set<String> contextHandles = getAppiumDriver().getContextHandles();
 			getAppiumDriver().context(contextHandles.toArray(new String[] {})[1]);
 		}
 	}
@@ -118,7 +143,7 @@ public abstract class AbstractPage {
 	/**
 	 * If current execution is using the AppiumDriver, it returns the AppiumDriver
 	 * instance(type-cast)
-	 * 
+	 *
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
@@ -133,13 +158,14 @@ public abstract class AbstractPage {
 
 	/**
 	 * Select a webElement based on content text from a list
-	 * 
+	 *
 	 * @param webElementList
 	 * @param requiredText
 	 * @return
 	 */
-	protected WebElement selectWebElementWithTextFromList(List<WebElement> webElementList, String requiredText) {
-		for (WebElement webElement : webElementList) {
+	protected WebElement selectWebElementWithTextFromList(final List<WebElement> webElementList,
+			final String requiredText) {
+		for (final WebElement webElement : webElementList) {
 			if (webElement.getText().contains(requiredText)) {
 				return webElement;
 			}
@@ -149,33 +175,70 @@ public abstract class AbstractPage {
 
 	/**
 	 * Select an option from a dropDown element
-	 * 
+	 *
 	 * @param dropdownWebElement
 	 * @param requiredText
 	 */
-	protected void selectValueFromDropdown(WebElement dropdownWebElement, String requiredText) {
-		Select dropdown = new Select(dropdownWebElement);
+	protected void selectValueFromDropdown(final WebElement dropdownWebElement, final String requiredText) {
+		final Select dropdown = new Select(dropdownWebElement);
 		dropdown.selectByValue(requiredText);
 	}
 
 	/**
 	 * Scroll to an element on the page
-	 * 
+	 *
 	 * @param webElement
 	 */
-	protected void scrollIntoView(WebElement webElement) {
-		JavascriptExecutor jse = (JavascriptExecutor) webDriver;
+	protected void scrollIntoView(final WebElement webElement) {
+		final JavascriptExecutor jse = (JavascriptExecutor) webDriver;
 		jse.executeScript("arguments[0].scrollIntoView();", webElement);
 	}
 
 	/**
 	 * Force click on an element on the page
-	 * 
+	 *
 	 * @param webElement
 	 */
-	protected void forceClick(WebElement webElement) {
-		JavascriptExecutor jse = (JavascriptExecutor) webDriver;
+	protected void forceClick(final WebElement webElement) {
+		final JavascriptExecutor jse = (JavascriptExecutor) webDriver;
 		jse.executeScript("arguments[0].click();", webElement);
+	}
+
+	/**
+	 * Disable an element on the page
+	 *
+	 * @param webElement
+	 */
+	protected void disable(final WebElement webElement) {
+		final JavascriptExecutor jse = (JavascriptExecutor) webDriver;
+		jse.executeScript("arguments[0].setAttribute('disabled', '');", webElement);
+	}
+
+	/**
+	 * Hide an element on the page
+	 *
+	 * @param webElement
+	 */
+	protected void hide(final WebElement webElement) {
+		final JavascriptExecutor jse = (JavascriptExecutor) webDriver;
+		jse.executeScript("arguments[0].setAttribute('style', 'display: none');", webElement);
+	}
+
+	/**
+	 * Force click on an element on the page
+	 *
+	 * @param webElement
+	 */
+	protected boolean isElementPresent(final WebElement webElement) {
+		boolean present = false;
+		try {
+			if (webElement.isDisplayed()) {
+				present = true;
+			}
+		} catch (final NoSuchElementException | StaleElementReferenceException e) {
+			present = false;
+		}
+		return present;
 	}
 
 }
