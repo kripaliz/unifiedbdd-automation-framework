@@ -166,7 +166,7 @@ public abstract class AbstractPage {
 	protected WebElement selectWebElementWithTextFromList(final List<WebElement> webElementList,
 			final String requiredText) {
 		for (final WebElement webElement : webElementList) {
-			if (webElement.getText().contains(requiredText)) {
+			if (webElement.getText().replaceAll("\\s+", " ").contains(requiredText.replaceAll("\\s+", " "))) {
 				return webElement;
 			}
 		}
