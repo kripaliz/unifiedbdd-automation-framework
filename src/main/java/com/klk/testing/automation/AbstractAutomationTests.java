@@ -6,8 +6,11 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 
 /**
- * An abstraction for a JUnit test runner that kicks off cucumber.
- * 
+ * An abstraction for a JUnit test runner that kicks off cucumber. <br>
+ * <br>
+ * This abstraction and its subclasses are not used when running using the
+ * cucumber-jvm-parallel-plugin.
+ *
  * @author kkurian
  *
  */

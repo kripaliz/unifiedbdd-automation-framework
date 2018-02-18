@@ -15,7 +15,7 @@ import com.klk.testing.automation.AutomationApplication;
 /**
  * A marker interface for StepDef classes. It takes care of the spring context
  * initialisation.
- * 
+ *
  * @author kkurian
  *
  */
