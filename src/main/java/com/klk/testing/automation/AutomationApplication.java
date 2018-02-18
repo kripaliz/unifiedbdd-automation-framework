@@ -30,7 +30,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
-import com.klk.testing.automation.allure.listener.ScreenshotListener;
+import com.klk.testing.automation.allure.listener.TestReportListener;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -59,7 +59,7 @@ public class AutomationApplication {
 	@Scope("cucumber-glue")
 	public WebDriver webDriver() throws MalformedURLException {
 		WebDriver webDriver = getWebDriver();
-		ScreenshotListener.WEB_DRIVER.set(webDriver);
+		TestReportListener.WEB_DRIVER.set(webDriver);
 		return webDriver;
 	}
 
@@ -99,7 +99,7 @@ public class AutomationApplication {
 
 	protected DesiredCapabilities getCapabilities() {
 		if (MapUtils.isNotEmpty(webDriverConfig.getDesiredCapabilities())) {
-			webDriverConfig.getDesiredCapabilities().put("name", ScreenshotListener.TEST_NAME.get());
+			webDriverConfig.getDesiredCapabilities().put("name", TestReportListener.TEST_NAME.get());
 		}
 		return new DesiredCapabilities(webDriverConfig.getDesiredCapabilities());
 	}
