@@ -67,6 +67,21 @@ public abstract class AbstractPage {
 	}
 
 	/**
+	 * Waits for given <code>webElement</code> to have an <code>attribute</code> of
+	 * <code>value</code> upto <code>timeOut</code> seconds
+	 *
+	 * @param webElement
+	 * @param attribute
+	 * @param value
+	 * @param timeOut
+	 */
+	protected void waitForElementAttribute(final WebElement webElement, final long timeOut, final String attribute,
+			final String value) {
+		final WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
+		wait.until(ExpectedConditions.attributeContains(webElement, attribute, value));
+	}
+
+	/**
 	 * Sends the return/enter key
 	 *
 	 * @param webElement
