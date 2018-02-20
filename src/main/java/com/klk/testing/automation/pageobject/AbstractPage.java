@@ -206,8 +206,15 @@ public abstract class AbstractPage {
 	 * @param requiredText
 	 */
 	protected void selectValueFromDropdown(final WebElement dropdownWebElement, final String requiredText) {
-		final Select dropdown = new Select(dropdownWebElement);
-		dropdown.selectByValue(requiredText);
+		if (isSafari()) {
+			final JavascriptExecutor jse = (JavascriptExecutor) webDriver;
+			jse.executeScript(
+					"var select = arguments[0]; for(var i = 0; i < select.options.length; i++){ if(select.options[i].text == arguments[1]){ select.options[i].selected = true; } }",
+					dropdownWebElement, requiredText);
+		} else {
+			final Select dropdown = new Select(dropdownWebElement);
+			dropdown.selectByValue(requiredText);
+		}
 	}
 
 	/**
