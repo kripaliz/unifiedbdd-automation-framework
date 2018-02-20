@@ -18,6 +18,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -134,6 +135,16 @@ public abstract class AbstractPage {
 		return webDriver instanceof InternetExplorerDriver
 				|| MapUtils.isNotEmpty(webDriverConfig.getDesiredCapabilities()) && "Internet Explorer"
 						.equalsIgnoreCase(webDriverConfig.getDesiredCapabilities().get("browserName"));
+	}
+
+	/**
+	 * Check whether current execution is on Safari
+	 *
+	 * @return
+	 */
+	protected boolean isSafari() {
+		return webDriver instanceof SafariDriver || MapUtils.isNotEmpty(webDriverConfig.getDesiredCapabilities())
+				&& "Safari".equalsIgnoreCase(webDriverConfig.getDesiredCapabilities().get("browserName"));
 	}
 
 	/**
