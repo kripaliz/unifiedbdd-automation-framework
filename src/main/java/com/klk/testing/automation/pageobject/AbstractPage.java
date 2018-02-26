@@ -3,8 +3,8 @@
  */
 package com.klk.testing.automation.pageobject;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -97,6 +97,21 @@ public abstract class AbstractPage {
 	}
 
 	/**
+	 * Sends the search key on Android
+	 *
+	 * @param webElement
+	 * @throws IOException
+	 */
+	@SuppressWarnings("rawtypes")
+	protected void sendSearchKey(final WebElement webElement) throws IOException {
+		if (webDriver instanceof AndroidDriver) {
+			((AndroidDriver) webDriver).pressKeyCode(AndroidKeyCode.KEYCODE_SEARCH);
+			final String command = "adb shell input keyevent KEYCODE_ENTER";
+			Runtime.getRuntime().exec(command);
+		}
+	}
+
+	/**
 	 * Check whether current execution is on a mobile device
 	 *
 	 * @return
@@ -148,12 +163,41 @@ public abstract class AbstractPage {
 	}
 
 	/**
-	 * Switches current webDriver context to the webView
+	 * Check whether current execution is on a Safari browser on mobile device
+	 *
+	 * @return
 	 */
-	protected void switchToWebView() {
+	protected boolean isDeviceSafari() {
+		return webDriver instanceof AppiumDriver && MapUtils.isNotEmpty(webDriverConfig.getDesiredCapabilities())
+				&& "Safari".equalsIgnoreCase(webDriverConfig.getDesiredCapabilities().get("browserName"));
+	}
+
+	/**
+	 * Switches current webDriver context to the webView
+	 *
+	 * @param requiredPageTitle
+	 */
+	protected void switchToWebView(final String requiredPageTitle) {
 		if (isApp()) {
-			final Set<String> contextHandles = getAppiumDriver().getContextHandles();
-			getAppiumDriver().context(contextHandles.toArray(new String[] {})[1]);
+			String webViewContext = "";
+			// Switch to first web view context
+			for (final String contextHandles : getAppiumDriver().getContextHandles()) {
+				if (contextHandles.contains("WEBVIEW")) {
+					webViewContext = contextHandles;
+					break;
+				}
+			}
+			getAppiumDriver().context(webViewContext);
+			// Switch to window handle of the required page
+			String pageTitle = "";
+			for (final String windowHandle : getAppiumDriver().getWindowHandles()) {
+				webViewContext = windowHandle;
+				getAppiumDriver().switchTo().window(webViewContext);
+				pageTitle = webDriver.getTitle();
+				if (pageTitle.contains(requiredPageTitle)) {
+					break;
+				}
+			}
 		}
 	}
 
