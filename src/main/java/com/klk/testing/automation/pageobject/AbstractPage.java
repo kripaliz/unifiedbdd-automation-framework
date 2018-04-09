@@ -257,8 +257,20 @@ public abstract class AbstractPage {
 					dropdownWebElement, requiredText);
 		} else {
 			final Select dropdown = new Select(dropdownWebElement);
-			dropdown.selectByValue(requiredText);
+			dropdown.selectByVisibleText(requiredText);
 		}
+	}
+
+	/**
+	 * get the selected option from a dropDown element
+	 *
+	 * @param dropdownWebElement
+	 */
+	protected String getSelectedOptionFromDropdown(final WebElement dropdownWebElement) {
+		final Select dropdown = new Select(dropdownWebElement);
+		final WebElement option = dropdown.getFirstSelectedOption();
+		final String selectedOption = option.getText();
+		return selectedOption;
 	}
 
 	/**
