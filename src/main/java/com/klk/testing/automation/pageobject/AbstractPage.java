@@ -10,9 +10,11 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -314,17 +316,20 @@ public abstract class AbstractPage {
 	}
 
 	/**
-	 * Force click on an element on the page
+	 * Check whether element is present
 	 *
 	 * @param webElement
 	 */
 	protected boolean isElementPresent(final WebElement webElement) {
 		boolean present = false;
 		try {
-			if (webElement.isDisplayed()) {
-				present = true;
+			if (webElement.isDisplayed() && webElement.isEnabled()) {
+				final Point point = webElement.getLocation();
+				if (point.x > 0 && point.y > 0) {
+					present = true;
+				}
 			}
-		} catch (final NoSuchElementException | StaleElementReferenceException e) {
+		} catch (final NoSuchElementException | StaleElementReferenceException | ElementNotVisibleException e) {
 			present = false;
 		}
 		return present;
