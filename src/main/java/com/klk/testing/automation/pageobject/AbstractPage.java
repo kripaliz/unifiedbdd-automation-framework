@@ -4,6 +4,7 @@
 package com.klk.testing.automation.pageobject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -334,6 +335,22 @@ public abstract class AbstractPage {
 			present = false;
 		}
 		return present;
+	}
+
+	/**
+	 * Get textList from all webElementList
+	 *
+	 * @param webElementList
+	 * @return
+	 */
+	public List<String> getTextListFromWebElementList(final List<WebElement> webElementList) {
+		final List<String> textList = new ArrayList<>();
+		if (webElementList != null && !webElementList.isEmpty()) {
+			for (final WebElement webElement : webElementList) {
+				textList.add(webElement.getText());
+			}
+		}
+		return textList;
 	}
 
 }
