@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -353,4 +354,23 @@ public abstract class AbstractPage {
 		return textList;
 	}
 
+	/**
+	 * Get Dynamic WebElement
+	 *
+	 * @param webElement
+	 * @return
+	 */
+	public WebElement getWebElementWithDynamicXpath(final String xpathLocator, final String substitutionValue) {
+		return webDriver.findElement(By.xpath(xpathLocator.replace("xxxxx", substitutionValue)));
+	}
+
+	/**
+	 * Get Dynamic WebElementList
+	 *
+	 * @param webElementList
+	 * @return
+	 */
+	public List<WebElement> getWebElementsWithDynamicXpath(final String xpathLocator, final String substitutionValue) {
+		return webDriver.findElements(By.xpath(xpathLocator.replace("xxxxx", substitutionValue)));
+	}
 }
