@@ -339,7 +339,7 @@ public abstract class AbstractPage {
 	}
 
 	/**
-	 * Get textList from all webElementList
+	 * Get textList from webElementList
 	 *
 	 * @param webElementList
 	 * @return
@@ -352,6 +352,23 @@ public abstract class AbstractPage {
 			}
 		}
 		return textList;
+	}
+
+	/**
+	 * Get attribute list from webElementList
+	 *
+	 * @param webElementList
+	 * @return
+	 */
+	public List<String> getAttributeListFromWebElementList(final List<WebElement> webElementList,
+			final String attribute) {
+		final List<String> attributeList = new ArrayList<>();
+		if (webElementList != null && !webElementList.isEmpty()) {
+			for (final WebElement webElement : webElementList) {
+				attributeList.add(webElement.getAttribute(attribute));
+			}
+		}
+		return attributeList;
 	}
 
 	/**
