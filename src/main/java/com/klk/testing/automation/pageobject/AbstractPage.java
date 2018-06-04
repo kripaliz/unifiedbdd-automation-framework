@@ -72,6 +72,20 @@ public abstract class AbstractPage {
 	}
 
 	/**
+	 * Waits for given <code>webElement1</code> or <code>webElement2</code> upto
+	 * <code>timeOut</code> seconds
+	 *
+	 * @param webElement1
+	 * @param timeOut
+	 */
+	protected void waitForOneOfElements(final WebElement webElement1, final WebElement webElement2,
+			final long timeOut) {
+		final WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
+		wait.until(ExpectedConditions.or(ExpectedConditions.elementToBeClickable(webElement1),
+				ExpectedConditions.elementToBeClickable(webElement2)));
+	}
+
+	/**
 	 * Waits for given <code>webElement</code> to have an <code>attribute</code> of
 	 * <code>value</code> upto <code>timeOut</code> seconds
 	 *
