@@ -313,6 +313,18 @@ public abstract class AbstractPage {
 	}
 
 	/**
+	 * Force send keys on Code Mirror Fields
+	 *
+	 * @param webElement
+	 */
+	protected void forceSendKeysOnCodeMirrorFields(final WebElement webElement, final String string) {
+		final JavascriptExecutor jse = (JavascriptExecutor) webDriver;
+		final String inputString = string.replace("\n", "\\n");
+		final String script = "document.querySelector('.CodeMirror').CodeMirror.setValue('" + inputString + "')";
+		jse.executeScript(script, webElement);
+	}
+
+	/**
 	 * Disable an element on the page
 	 *
 	 * @param webElement
