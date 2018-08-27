@@ -30,6 +30,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.klk.testing.automation.allure.listener.TestReportListener;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -55,10 +56,15 @@ public class AutomationApplication {
 	@Autowired
 	private WebDriverConfig webDriverConfig;
 
+	@Bean
+	public ObjectMapper objectMapper() {
+		return new ObjectMapper();
+	}
+
 	@Bean(destroyMethod = "quit")
 	@Scope("cucumber-glue")
 	public WebDriver webDriver() throws MalformedURLException {
-		WebDriver webDriver = getWebDriver();
+		final WebDriver webDriver = getWebDriver();
 		TestReportListener.WEB_DRIVER.set(webDriver);
 		return webDriver;
 	}
@@ -85,7 +91,7 @@ public class AutomationApplication {
 		case "remote":
 			return new RemoteWebDriver(new URL(webDriverConfig.getUrl()), getCapabilities());
 		case "android":
-			DesiredCapabilities capabilities = getCapabilities();
+			final DesiredCapabilities capabilities = getCapabilities();
 			capabilities.setCapability("unicodeKeyboard", "true");
 			capabilities.setCapability("resetKeyboard", "true");
 			return new AndroidDriver<>(new URL(webDriverConfig.getUrl()), capabilities);
@@ -106,19 +112,19 @@ public class AutomationApplication {
 
 	@PostConstruct
 	public void writeAllureEnvironment() {
-		String path = getAllureResultsPath();
+		final String path = getAllureResultsPath();
 		new File(path).mkdirs();
-		File environmentFile = new File(path, "environment.properties");
+		final File environmentFile = new File(path, "environment.properties");
 		try (OutputStream outputStream = new FileOutputStream(environmentFile)) {
-			Properties properties = new Properties();
-			for (String key : Arrays.asList("spring.profiles.active")) {
+			final Properties properties = new Properties();
+			for (final String key : Arrays.asList("spring.profiles.active")) {
 				properties.put(key, applicationContext.getEnvironment().getProperty(key));
 			}
 			System.getProperties().entrySet().parallelStream()
 					.filter(property -> Arrays.asList("threadCount", "cucumber.tags").contains(property.getKey()))
 					.forEach(property -> properties.put(property.getKey(), property.getValue()));
 			properties.store(outputStream, null);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			LOG.warn("error saving environment.properties", e);
 		}
 	}
