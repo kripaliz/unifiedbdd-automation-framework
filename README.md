@@ -15,4 +15,4 @@ UI Automation framework / solution implemented in Java to support web browser as
 * [Appium](http://appium.io/) – mobile automation
 * [Page Object Model](https://www.seleniumhq.org/docs/06_test_design_considerations.jsp) – design pattern to abstract page behaviour
 * [Spring Boot](http://spring.io/projects/spring-boot) – cleaner code
-* [Webdriver Manager](https://www.npmjs.com/package/webdriver-manager) – manage webdriver executables automatically
+* [Webdriver Manager](https://github.com/bonigarcia/webdrivermanager) – manage webdriver executables automatically
