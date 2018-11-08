@@ -1,5 +1,8 @@
 # UnifiedBDD Automation Framework
 
+## BDD automation testing Made simple
+[![Build Status](https://travis-ci.org/kripaliz/unifiedbdd-automation-framework.svg?branch=master)](https://travis-ci.org/kripaliz/unifiedbdd-automation-framework)
+
 UI Automation framework / solution implemented in Java to support web browser as well as mobile browser / App automation. This includes
 
 * abstraction for PageObject
