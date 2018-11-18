@@ -1,4 +1,4 @@
-package com.klk.testing.automation;
+package com.github.kripaliz.automation;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.klk.testing.automation;
+package com.github.kripaliz.automation;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,7 +31,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.klk.testing.automation.allure.listener.TestReportListener;
+import com.github.kripaliz.automation.allure.listener.TestReportListener;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;

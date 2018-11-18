@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.klk.testing.automation.pageobject;
+package com.github.kripaliz.automation.pageobject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.klk.testing.automation.WebDriverConfig;
+import com.github.kripaliz.automation.WebDriverConfig;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;

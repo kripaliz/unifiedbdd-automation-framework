@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.klk.testing.automation.allure.listener;
+package com.github.kripaliz.automation.allure.listener;
 
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;

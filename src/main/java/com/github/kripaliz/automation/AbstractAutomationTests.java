@@ -1,4 +1,4 @@
-package com.klk.testing.automation;
+package com.github.kripaliz.automation;
 
 import org.junit.runner.RunWith;
 

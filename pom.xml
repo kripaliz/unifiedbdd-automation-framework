@@ -6,8 +6,8 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.9.RELEASE</version>
 	</parent>
-	<groupId>com.klk.testing</groupId>
-	<artifactId>automation-framework</artifactId>
+	<groupId>com.github.kripaliz</groupId>
+	<artifactId>unifiedbdd-automation-framework</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>

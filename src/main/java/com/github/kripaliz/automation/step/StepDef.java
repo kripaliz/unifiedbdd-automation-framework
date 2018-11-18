@@ -1,4 +1,4 @@
-package com.klk.testing.automation.step;
+package com.github.kripaliz.automation.step;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.klk.testing.automation.AutomationApplication;
+import com.github.kripaliz.automation.AutomationApplication;
 
 /**
  * A marker interface for StepDef classes. It takes care of the spring context

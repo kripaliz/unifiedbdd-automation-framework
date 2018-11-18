@@ -1,4 +1,4 @@
-package com.klk.testing.automation.pageobject;
+package com.github.kripaliz.automation.pageobject;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
