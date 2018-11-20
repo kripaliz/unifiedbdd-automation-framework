@@ -402,7 +402,8 @@ public abstract class AbstractPage {
 	/**
 	 * Get Dynamic WebElement
 	 *
-	 * @param webElement
+	 * @param xpathLocator
+	 * @param substitutionValue
 	 * @return
 	 */
 	public WebElement getWebElementWithDynamicXpath(final String xpathLocator, final String substitutionValue) {
@@ -412,7 +413,8 @@ public abstract class AbstractPage {
 	/**
 	 * Get Dynamic WebElementList
 	 *
-	 * @param webElementList
+	 * @param xpathLocator
+	 * @param substitutionValue
 	 * @return
 	 */
 	public List<WebElement> getWebElementsWithDynamicXpath(final String xpathLocator, final String substitutionValue) {
