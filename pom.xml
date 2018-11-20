@@ -67,4 +67,41 @@
 			<artifactId>snakeyaml</artifactId>
 		</dependency>
 	</dependencies>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>scm:git:https://github.com/kripaliz/unifiedbdd-automation-framework.git</connection>
+		<url>https://github.com/kripaliz/unifiedbdd-automation-framework</url>
+	</scm>
+
+	<distributionManagement>
+		<site>
+			<id>unifiedbdd-automation-framework.wiki</id>
+			<url>https://github.com/kripaliz/unifiedbdd-automation-framework/wiki</url>
+		</site>
+
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
+	<developers>
+		<developer>
+			<name>Kripa Kurian</name>
+			<email>kripaliz@gmail.com</email>
+		</developer>
+	</developers>
 </project>
