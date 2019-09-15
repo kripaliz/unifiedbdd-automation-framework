@@ -101,6 +101,14 @@ public abstract class AbstractPage {
 	}
 
 	/**
+	 * Wait till browser service worker is ready
+	 */
+	protected void waitForServiceWorkerReadiness() {
+		((JavascriptExecutor) webDriver).executeAsyncScript(
+				"var callback = arguments[arguments.length - 1]; navigator.serviceWorker.ready.then(callback);");
+	}
+
+	/**
 	 * Sends the return/enter key
 	 *
 	 * @param webElement
