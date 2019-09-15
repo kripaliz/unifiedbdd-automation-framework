@@ -120,6 +120,16 @@
 			</activation>
 			<build>
 				<plugins>
+					<!-- To set source and target compilation to java 1.8 -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>3.3</version>
+						<configuration>
+							<source>1.8</source>
+							<target>1.8</target>
+						</configuration>
+					</plugin>
 					<!-- To release to Maven central -->
 					<plugin>
 						<groupId>org.sonatype.plugins</groupId>
