@@ -76,6 +76,7 @@ public abstract class AbstractPage {
 	 * <code>timeOut</code> seconds
 	 *
 	 * @param webElement1
+	 * @param webElement2
 	 * @param timeOut
 	 */
 	protected void waitForOneOfElements(final WebElement webElement1, final WebElement webElement2,
@@ -83,6 +84,23 @@ public abstract class AbstractPage {
 		final WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
 		wait.until(ExpectedConditions.or(ExpectedConditions.elementToBeClickable(webElement1),
 				ExpectedConditions.elementToBeClickable(webElement2)));
+	}
+
+	/**
+	 * Waits for given <code>webElement1</code> or <code>webElement2</code> or
+	 * <code>webElement3</code> upto <code>timeOut</code> seconds
+	 *
+	 * @param webElement1
+	 * @param webElement2
+	 * @param webElement3
+	 * @param timeOut
+	 */
+	protected void waitForOneOfElements(final WebElement webElement1, final WebElement webElement2,
+			final WebElement webElement3, final long timeOut) {
+		final WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
+		wait.until(ExpectedConditions.or(ExpectedConditions.elementToBeClickable(webElement1),
+				ExpectedConditions.elementToBeClickable(webElement2),
+				ExpectedConditions.elementToBeClickable(webElement3)));
 	}
 
 	/**
@@ -98,6 +116,18 @@ public abstract class AbstractPage {
 			final long timeOut) {
 		final WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
 		wait.until(ExpectedConditions.attributeContains(webElement, attribute, value));
+	}
+
+	/**
+	 * Waits for given <code>locator</code> to not be displayed on page for upto
+	 * <code>timeOut</code> seconds
+	 *
+	 * @param locator
+	 * @param timeOut
+	 */
+	protected void waitForElementInvisibility(final By locator, final long timeOut) {
+		final WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
 	}
 
 	/**

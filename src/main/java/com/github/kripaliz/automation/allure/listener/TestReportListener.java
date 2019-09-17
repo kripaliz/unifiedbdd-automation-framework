@@ -41,7 +41,7 @@ public class TestReportListener implements TestLifecycleListener, StepLifecycleL
 	@Override
 	public void afterTestUpdate(final TestResult result) {
 		final WebDriver webDriver = WEB_DRIVER.get();
-		if (webDriver != null && Status.FAILED.equals(result.getStatus())) {
+		if (webDriver != null && Status.BROKEN.equals(result.getStatus())) {
 			Allure.addByteAttachmentAsync("Screenshot", "image/png", ".png",
 					() -> ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES));
 		}
