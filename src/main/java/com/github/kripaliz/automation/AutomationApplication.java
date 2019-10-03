@@ -21,8 +21,6 @@ import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,12 +29,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.kripaliz.automation.allure.listener.TestReportListener;
+import com.github.kripaliz.automation.cucumber.plugin.TestReportListener;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.util.PropertiesUtils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * The Spring Boot application configuration that starts wiring up the
@@ -45,16 +44,21 @@ import io.qameta.allure.util.PropertiesUtils;
  * @author kkurian
  *
  */
+@Slf4j
 @SpringBootApplication
 public class AutomationApplication {
 
-	private static final Logger LOG = LoggerFactory.getLogger(AutomationApplication.class);
+	private static ThreadLocal<WebDriver> WEB_DRIVER = new ThreadLocal<>();
 
 	@Autowired
 	private ApplicationContext applicationContext;
 
 	@Autowired
 	private WebDriverConfig webDriverConfig;
+
+	public static WebDriver getWebDriver() {
+		return WEB_DRIVER.get();
+	}
 
 	@Bean
 	public ObjectMapper objectMapper() {
@@ -64,12 +68,12 @@ public class AutomationApplication {
 	@Bean(destroyMethod = "quit")
 	@Scope("cucumber-glue")
 	public WebDriver webDriver() throws MalformedURLException {
-		final WebDriver webDriver = getWebDriver();
-		TestReportListener.WEB_DRIVER.set(webDriver);
+		final WebDriver webDriver = createWebDriver();
+		WEB_DRIVER.set(webDriver);
 		return webDriver;
 	}
 
-	private WebDriver getWebDriver() throws MalformedURLException {
+	private WebDriver createWebDriver() throws MalformedURLException {
 		switch (webDriverConfig.getType().toLowerCase()) {
 		case "chrome":
 			WebDriverManager.chromedriver().setup();
@@ -105,7 +109,7 @@ public class AutomationApplication {
 
 	protected DesiredCapabilities getCapabilities() {
 		if (MapUtils.isNotEmpty(webDriverConfig.getDesiredCapabilities())) {
-			webDriverConfig.getDesiredCapabilities().put("name", TestReportListener.TEST_NAME.get());
+			webDriverConfig.getDesiredCapabilities().put("name", TestReportListener.getTestName());
 		}
 		return new DesiredCapabilities(webDriverConfig.getDesiredCapabilities());
 	}
@@ -125,7 +129,7 @@ public class AutomationApplication {
 					.forEach(property -> properties.put(property.getKey(), property.getValue()));
 			properties.store(outputStream, null);
 		} catch (final IOException e) {
-			LOG.warn("error saving environment.properties", e);
+			log.warn("error saving environment.properties", e);
 		}
 	}
 

@@ -1,21 +1,37 @@
 package com.github.kripaliz.automation;
 
-import org.junit.runner.RunWith;
+import org.testng.annotations.DataProvider;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.testng.CucumberOptions;
 
 /**
- * An abstraction for a JUnit test runner that kicks off cucumber. <br>
+ * An abstraction for a TestNg runner that kicks off cucumber. <br>
  * <br>
- * This abstraction and its subclasses are not used when running using the
- * cucumber-jvm-parallel-plugin.
+ *
+ * Extend this in your test suite and configure your glue package like:
+ *
+ * <pre>
+ * <code>
+&#64;CucumberOptions(glue = { "com.company.testing.step" })
+public class AutomationTests extends AbstractAutomationTests {
+
+}
+ * </code>
+ * </pre>
  *
  * @author kkurian
  *
  */
-@CucumberOptions(features = "classpath:features", tags = { "~@wip" })
-@RunWith(Cucumber.class)
-public abstract class AbstractAutomationTests {
+@CucumberOptions(features = "classpath:features", tags = { "not @wip" }, plugin = { "pretty",
+		"com.github.kripaliz.automation.cucumber.plugin.TestReportListener",
+		"io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm" }, glue = { "com.github.kripaliz.automation.cucumber.glue" })
+public abstract class AbstractAutomationTests extends AbstractTestNGCucumberTests {
+
+	@Override
+	@DataProvider(parallel = true)
+	public Object[][] scenarios() {
+		return super.scenarios();
+	}
 
 }

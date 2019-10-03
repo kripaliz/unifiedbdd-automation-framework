@@ -5,25 +5,19 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import com.github.kripaliz.automation.AutomationApplication;
+import com.github.kripaliz.automation.cucumber.glue.ContextLoader;
 
 /**
  * A marker interface for StepDef classes. It takes care of the spring context
  * initialisation.
  *
  * @author kkurian
- *
+ * @deprecated not required on StepDef classes anymore. We now use
+ *             {@link ContextLoader} to load the spring context.
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = AutomationApplication.class)
-@SpringBootTest
+@Deprecated
 public @interface StepDef {
 
 }
