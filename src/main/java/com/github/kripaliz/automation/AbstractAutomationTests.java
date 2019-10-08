@@ -25,7 +25,8 @@ public class AutomationTests extends AbstractAutomationTests {
  */
 @CucumberOptions(features = "classpath:features", tags = { "not @wip" }, plugin = { "pretty",
 		"com.github.kripaliz.automation.cucumber.plugin.TestReportListener",
-		"io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm" }, glue = { "com.github.kripaliz.automation.cucumber.glue" })
+		"io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm",
+		"rerun:target/rerun.txt" }, glue = { "com.github.kripaliz.automation.cucumber.glue" })
 public abstract class AbstractAutomationTests extends AbstractTestNGCucumberTests {
 
 	@Override

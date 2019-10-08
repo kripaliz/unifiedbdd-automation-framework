@@ -150,6 +150,11 @@ To use this automation framework in your test suite:
 	mvn allure:serve
 	```
 
+10. To re-run failed tests
+
+	```sh
+	mvn test -Dcucumber.options=@target/rerun.txt -Dspring.profiles.active=chrome -DthreadCount=4
+	```
 
 ## Setting up eclipse for developing
 
