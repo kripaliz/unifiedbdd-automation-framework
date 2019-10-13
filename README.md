@@ -40,7 +40,7 @@ To use this automation framework in your test suite:
 		<parent>
 			<groupId>com.github.kripaliz</groupId>
 			<artifactId>unifiedbdd-automation-parent</artifactId>
-			<version>0.1.0</version>
+			<version>0.1.1</version>
 		</parent>
 		<groupId>com.company.testing</groupId>
 		<artifactId>uiautomation-suite</artifactId>
