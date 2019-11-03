@@ -20,6 +20,14 @@ import cucumber.api.event.TestStepFinished;
 import io.qameta.allure.Allure;
 
 /**
+ * A cucumber plugin that handles events to:
+ * <ul>
+ * <li>save test name on start of a test (this is used in the config map of
+ * webDriver)</li>
+ * <li>capture screenshots on test failure and for steps which contains
+ * 'print'</li>
+ * </ul>
+ *
  * @author kkurian
  *
  */

@@ -3,7 +3,6 @@
  */
 package com.github.kripaliz.automation.pageobject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,8 @@ import com.github.kripaliz.automation.WebDriverConfig;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidKeyCode;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 /**
@@ -146,24 +146,9 @@ public abstract class AbstractPage {
 	@SuppressWarnings("rawtypes")
 	protected void sendEnterKey(final WebElement webElement) {
 		if (webDriver instanceof AndroidDriver) {
-			((AndroidDriver) webDriver).pressKeyCode(AndroidKeyCode.ENTER);
+			((AndroidDriver) webDriver).pressKey(new KeyEvent(AndroidKey.ENTER));
 		} else {
 			webElement.sendKeys(Keys.RETURN);
-		}
-	}
-
-	/**
-	 * Sends the search key on Android
-	 *
-	 * @param webElement
-	 * @throws IOException
-	 */
-	@SuppressWarnings("rawtypes")
-	protected void sendSearchKey(final WebElement webElement) throws IOException {
-		if (webDriver instanceof AndroidDriver) {
-			((AndroidDriver) webDriver).pressKeyCode(AndroidKeyCode.KEYCODE_SEARCH);
-			final String command = "adb shell input keyevent KEYCODE_ENTER";
-			Runtime.getRuntime().exec(command);
 		}
 	}
 
