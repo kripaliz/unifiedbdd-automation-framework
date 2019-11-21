@@ -7,7 +7,7 @@
 UI Automation framework / solution implemented in Java to support web browser as well as mobile browser / App automation. This includes
 
 * abstraction for PageObject
-* ContextLoader for Spring context initialization
+* ContextLoader for Spring context initialisation
 * TestNg test runner that kicks off cucumber
 * Spring Boot application configuration
 * Webdriver properties, test data properties
@@ -156,9 +156,21 @@ To use this automation framework in your test suite:
 	mvn test -Dcucumber.options=@target/rerun.txt -Dspring.profiles.active=chrome -DthreadCount=4
 	```
 
+## Configuring the TypeRegistry
+
+Cucumber 3+ provides `TypeRegistryConfigurer` to configure custom parameter types and data table types. The framework already defines one to setup a default DataTable Transformer using Jackson library.
+To extend it, please use ServiceLoader mechanism:
+
+* Create an implementation of `DataTableTypeProvider` or `ParameterTypeProvider`
+* In your test suite, add file(s) with the implementations referenced:
+    * `META-INF/services/com.github.kripaliz.automation.cucumber.DataTableTypeProvider`
+    * `META-INF/services/com.github.kripaliz.automation.cucumber.ParameterTypeProvider`
+
+Here's some more info on ServiceLoader; https://www.baeldung.com/java-spi
+
 ## Setting up eclipse for developing
 
 * Download [eclipse](https://www.eclipse.org/downloads/)
 * Follow instructions [here](https://projectlombok.org/setup/eclipse) for lombok setup
-* Install eclipse plugins from the [eclipse marketplace](https://marketplace.eclipse.org/content/welcome-eclipse-marketplace) or using their [update site](https://help.eclipse.org/kepler/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Ftasks%2Ftasks-127.htm) - [TestNG](https://dl.bintray.com/testng-team/testng-eclipse-release/6.14.3/), [YEdit](http://dadacoalition.org/yedit/), [Cucumber](https://marketplace.eclipse.org/content/cucumber-eclipse-plugin)
+* Install eclipse plugins from the [eclipse marketplace](https://marketplace.eclipse.org/content/welcome-eclipse-marketplace) or using their [update site](https://help.eclipse.org/kepler/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Ftasks%2Ftasks-127.htm) - [TestNG](https://dl.bintray.com/testng-team/testng-eclipse-release/6.14.3/), [YEdit](http://dadacoalition.org/yedit/), [Cucumber](https://cucumber.github.io/cucumber-eclipse-update-site-snapshot)
 * Follow instructions in the answer [here](https://stackoverflow.com/questions/1886185/eclipse-and-windows-newlines) to use Unix style line endings for new files
