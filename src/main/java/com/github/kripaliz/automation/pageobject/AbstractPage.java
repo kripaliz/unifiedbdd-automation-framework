@@ -168,8 +168,8 @@ public abstract class AbstractPage {
 	 */
 	protected boolean isApp() {
 		return isDevice() && MapUtils.isNotEmpty(webDriverConfig.getDesiredCapabilities())
-				&& (StringUtils.isNotBlank(webDriverConfig.getDesiredCapabilities().get("appPackage"))
-						|| StringUtils.isNotBlank(webDriverConfig.getDesiredCapabilities().get("app")));
+				&& (StringUtils.isNotBlank((String) webDriverConfig.getDesiredCapabilities().get("appPackage"))
+						|| StringUtils.isNotBlank((String) webDriverConfig.getDesiredCapabilities().get("app")));
 	}
 
 	/**
@@ -179,7 +179,7 @@ public abstract class AbstractPage {
 	 */
 	protected boolean isFirefox() {
 		return webDriver instanceof FirefoxDriver || MapUtils.isNotEmpty(webDriverConfig.getDesiredCapabilities())
-				&& "Firefox".equalsIgnoreCase(webDriverConfig.getDesiredCapabilities().get("browserName"));
+				&& "Firefox".equalsIgnoreCase((String) webDriverConfig.getDesiredCapabilities().get("browserName"));
 	}
 
 	/**
@@ -190,7 +190,7 @@ public abstract class AbstractPage {
 	protected boolean isInternetExplorer() {
 		return webDriver instanceof InternetExplorerDriver
 				|| MapUtils.isNotEmpty(webDriverConfig.getDesiredCapabilities()) && "Internet Explorer"
-						.equalsIgnoreCase(webDriverConfig.getDesiredCapabilities().get("browserName"));
+						.equalsIgnoreCase((String) webDriverConfig.getDesiredCapabilities().get("browserName"));
 	}
 
 	/**
@@ -200,7 +200,7 @@ public abstract class AbstractPage {
 	 */
 	protected boolean isSafari() {
 		return webDriver instanceof SafariDriver || MapUtils.isNotEmpty(webDriverConfig.getDesiredCapabilities())
-				&& "Safari".equalsIgnoreCase(webDriverConfig.getDesiredCapabilities().get("browserName"));
+				&& "Safari".equalsIgnoreCase((String) webDriverConfig.getDesiredCapabilities().get("browserName"));
 	}
 
 	/**
@@ -210,7 +210,7 @@ public abstract class AbstractPage {
 	 */
 	protected boolean isDeviceSafari() {
 		return webDriver instanceof AppiumDriver && MapUtils.isNotEmpty(webDriverConfig.getDesiredCapabilities())
-				&& "Safari".equalsIgnoreCase(webDriverConfig.getDesiredCapabilities().get("browserName"));
+				&& "Safari".equalsIgnoreCase((String) webDriverConfig.getDesiredCapabilities().get("browserName"));
 	}
 
 	/**

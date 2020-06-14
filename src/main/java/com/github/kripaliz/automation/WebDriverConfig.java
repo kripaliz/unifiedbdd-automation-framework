@@ -9,7 +9,7 @@ import lombok.Data;
 
 /**
  * A configuration bean for webDriver related properties.
- * 
+ *
  * @author kkurian
  *
  */
@@ -22,5 +22,5 @@ public class WebDriverConfig {
 
 	private String url;
 
-	private Map<String, String> desiredCapabilities;
+	private Map<String, Object> desiredCapabilities;
 }
