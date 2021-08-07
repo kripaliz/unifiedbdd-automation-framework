@@ -158,6 +158,9 @@
 								</goals>
 							</execution>
 						</executions>
+						<configuration>
+							<additionalJOption>-Xdoclint:none</additionalJOption>
+						</configuration>
 					</plugin>
 					<!-- To sign the artifacts -->
 					<plugin>
