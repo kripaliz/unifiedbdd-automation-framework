@@ -3,6 +3,7 @@
  */
 package com.github.kripaliz.automation.cucumber.plugin;
 
+import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 
 import org.openqa.selenium.OutputType;
@@ -95,7 +96,7 @@ public class TestReportListener implements ConcurrentEventListener {
 	 * @param webDriver
 	 */
 	private void saveScreenshot(final TakesScreenshot webDriver) {
-		Allure.addByteAttachmentAsync("Screenshot", "image/png", ".png",
-				() -> webDriver.getScreenshotAs(OutputType.BYTES));
+		Allure.addAttachment("Screenshot", "image/png",
+				new ByteArrayInputStream(webDriver.getScreenshotAs(OutputType.BYTES)), ".png");
 	}
 }
