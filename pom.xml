@@ -86,19 +86,10 @@
 	</scm>
 
 	<distributionManagement>
-		<site>
-			<id>unifiedbdd-automation-framework.wiki</id>
-			<url>https://github.com/kripaliz/unifiedbdd-automation-framework/wiki</url>
-		</site>
-
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-
 		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+			<id>github</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/kripaliz/unifiedbdd-automation-framework</url>
 		</repository>
 	</distributionManagement>
 
