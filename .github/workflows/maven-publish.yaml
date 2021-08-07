@@ -35,6 +35,8 @@ jobs:
         gpg --list-secret-keys --keyid-format LONG
     - name: Publish
       run: |
+        export GPG_TTY=$(tty)
+
         mvn \
           --no-transfer-progress \
           --batch-mode \
