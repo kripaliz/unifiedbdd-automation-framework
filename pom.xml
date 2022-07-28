@@ -8,15 +8,15 @@
 	</parent>
 	<groupId>com.github.kripaliz</groupId>
 	<artifactId>unifiedbdd-automation-framework</artifactId>
-	<version>0.1.5</version>
+	<version>0.1.6</version>
 
 	<properties>
-		<allure.version>2.13.0</allure.version>
-		<appium.version>7.2.0</appium.version>
-		<cucumber.version>4.7.2</cucumber.version>
+		<allure.version>2.18.1</allure.version>
+		<appium.version>8.1.1</appium.version>
+		<cucumber.version>7.3.3</cucumber.version>
 		<java.version>1.8</java.version>
 		<lombok.version>1.18.10</lombok.version>
-		<selenium.version>3.141.59</selenium.version>
+		<selenium.version>4.0.0</selenium.version>
 		<webdrivermanager.version>5.2.1</webdrivermanager.version>
 	</properties>
 
