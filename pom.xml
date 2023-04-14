@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>com.github.kripaliz</groupId>
 	<artifactId>unifiedbdd-automation-framework</artifactId>
-	<version>0.1.6</version>
+	<version>0.2.0</version>
 
 	<properties>
 		<allure.version>2.21.0</allure.version>
