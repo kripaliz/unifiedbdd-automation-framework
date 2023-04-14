@@ -1,12 +1,11 @@
 package com.github.kripaliz.automation.cucumber.glue;
 
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.github.kripaliz.automation.AutomationApplication;
 
 import io.cucumber.java.Before;
+import io.cucumber.spring.CucumberContextConfiguration;
 
 /**
  * This class loads the spring context for cucumber execution. This package is
@@ -15,7 +14,7 @@ import io.cucumber.java.Before;
  * @author kkurian
  *
  */
-@RunWith(SpringRunner.class)
+@CucumberContextConfiguration
 @SpringBootTest(classes = AutomationApplication.class)
 public class ContextLoader {
 
