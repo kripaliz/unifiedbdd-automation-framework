@@ -144,14 +144,14 @@ To use this automation framework in your test suite:
 	```sh
 	mvn clean test \
 	-Dcucumber.execution.parallel.config.fixed.parallelism=10 \
-	-Dcucumber.filter.tags="not @wip" \
+	-Dgroups="!wip" \
 	-Dspring.profiles.active=chrome \
 	-Dsurefire.rerunFailingTestsCount=0
 	```
 
 	options:
 	 - `cucumber.execution.parallel.config.fixed.parallelism`: specify the number of concurrent scenarios to execute
-	 - `cucumber.filter.tags`: specify [cucumber tags](https://cucumber.io/docs/cucumber/api/#tags) that you need to run
+	 - `groups`: [junit tag expressions](https://github.com/cucumber/cucumber-jvm/tree/main/cucumber-junit-platform-engine#tags) to limit scope of test execution
 	 - `spring.profiles.active`: switch between [spring profiles](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.profiles) created in application.yml
 	 - `surefire.rerunFailingTestsCount`: reruns for any failed tests
 
