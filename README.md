@@ -98,16 +98,18 @@ To use this automation framework in your test suite:
 		</root>
 	</configuration>
 	```
-4. Create a Tests class
+4. Create a Test suite class
 
 	```java
-	@Cucumber
+	@Suite
+	@IncludeEngines("cucumber")
+	@SelectClasspathResource("features")
 	public class AutomationTests {
 
 	}
 	```
 
-	`com.company.testing.step` is the package under which stepDef files can be created
+	Reference: https://github.com/cucumber/cucumber-jvm/tree/v7.8.1/cucumber-junit-platform-engine#suites-with-different-configurations
 
 5. Create PageObject classes that extend `com.github.kripaliz.automation.pageobject.AbstractPage` and use the marker interface `com.github.kripaliz.automation.pageobject.PageObject`.
 
@@ -123,7 +125,7 @@ To use this automation framework in your test suite:
 		}
 	}
 	```
-6. Create [StepDef](https://cucumber.io/docs/cucumber/step-definitions/) classes that use spring dependency injection to get pageObjects.
+6. Create [StepDef](https://cucumber.io/docs/cucumber/step-definitions/) classes that use spring dependency injection to get pageObjects. (under a package you configured in `cucumber.glue` in pom.xml)
 
 	```java
 	public class SignInSteps {
