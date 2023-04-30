@@ -74,7 +74,7 @@ public class TestReportListener implements ConcurrentEventListener {
 	 * @return
 	 */
 	private boolean isNotOk(final TestStepFinished event) {
-		return !event.getResult().getStatus().isOk(true);
+		return !event.getResult().getStatus().isOk();
 	}
 
 	/**
