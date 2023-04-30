@@ -8,12 +8,12 @@
 	</parent>
 	<groupId>com.github.kripaliz</groupId>
 	<artifactId>unifiedbdd-automation-framework</artifactId>
-	<version>0.2.0</version>
+	<version>0.3.0</version>
 
 	<properties>
 		<allure.version>2.21.0</allure.version>
 		<appium.version>7.2.0</appium.version>
-		<cucumber.version>5.7.0</cucumber.version>
+		<cucumber.version>7.8.1</cucumber.version>
 		<java.version>11</java.version>
 		<lombok.version>1.18.26</lombok.version>
 		<okhttp.version>3.12.0</okhttp.version>
@@ -53,7 +53,7 @@
 		</dependency>
 		<dependency>
 			<groupId>io.qameta.allure</groupId>
-			<artifactId>allure-cucumber5-jvm</artifactId>
+			<artifactId>allure-cucumber7-jvm</artifactId>
 			<version>${allure.version}</version>
 		</dependency>
 		<dependency>
@@ -89,6 +89,10 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
 	</dependencies>
 
